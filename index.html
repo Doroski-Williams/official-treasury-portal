@@ -3,178 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Disbursement Portal | Unclaimed Property Division</title>
+    <title>Multi-Step Interface Template</title>
     <style>
-        :root {
-            --treasury-blue: #112e51;
-            --trust-blue: #0071bc;
-            --accent-gold: #d4af37;
-            --success-green: #2e7d32;
-            --light-bg: #f0f4f8;
-            --text-dark: #212121;
-            --text-light: #ffffff;
-            --border-color: #d6d7d9;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        .gov-banner {
-            background-color: #f0f0f0;
-            padding: 5px 20px;
-            font-size: 11px;
-            color: #555;
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-            font-weight: 600;
-        }
-
-        header {
-            background-color: var(--treasury-blue);
-            color: var(--text-light);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
             padding: 20px;
-            border-bottom: 4px solid var(--accent-gold);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
         }
 
-        .branding h1 {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .branding p {
-            font-size: 13px;
-            color: #a1b0cb;
-            text-transform: uppercase;
-        }
-
-        .main-wrapper {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
-
-        .section-card {
+        .container {
             background: #ffffff;
-            padding: 25px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-
-        h2 {
-            color: var(--treasury-blue);
-            margin-bottom: 15px;
-            font-size: 20px;
-            border-bottom: 2px solid #f0f4f8;
-            padding-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .legal-notice {
-            background-color: #fff8e1;
-            border-left: 4px solid #ffb300;
-            padding: 15px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            color: #5d4037;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--treasury-blue);
-        }
-
-        .form-group input, .form-group select {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 15px;
-            background-color: #fafafa;
-        }
-
-        .upload-box {
-            border: 2px dashed var(--trust-blue);
-            background-color: #f4f8ff;
-            padding: 25px;
-            text-align: center;
-            border-radius: 4px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            background-color: var(--trust-blue);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 4px;
-            cursor: pointer;
-            text-transform: uppercase;
+            max-width: 600px;
             width: 100%;
-            margin-top: 20px;
-            transition: background 0.2s;
-            letter-spacing: 1px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
         }
 
-        .btn-submit:hover {
-            background-color: var(--treasury-blue);
-        }
-
-        /* Essential Display States */
-        #loading-screen, #dashboard-screen {
+        /* Visibility States */
+        .step-view {
             display: none;
         }
 
-        .loader-container {
-            text-align: center;
-            padding: 40px 20px;
+        .step-view.active {
+            display: block;
         }
 
-        /* Clean One-Inch Wide Spinner Target */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .action-btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background-color: #004085;
+        }
+
+        /* Simple Spinner */
         .spinner {
-            width: 96px;
-            height: 96px;
-            border: 6px solid #e0e0e0;
-            border-top: 6px solid var(--trust-blue);
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0056b3;
             border-radius: 50%;
-            margin: 0 auto 25px auto;
+            margin: 20px auto;
             animation: spin 1s linear infinite;
         }
 
@@ -183,434 +84,93 @@
             100% { transform: rotate(360deg); }
         }
 
-        .success-sticker {
-            background-color: #e8f5e9;
-            border: 2px solid var(--success-green);
-            padding: 20px;
-            border-radius: 4px;
+        .text-center {
             text-align: center;
-            margin: 20px auto;
-            max-width: 500px;
-            color: var(--success-green);
-            display: none;
-        }
-
-        .success-sticker h3 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        /* Dashboard Configuration */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .metric-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-top: 4px solid var(--trust-blue);
-            padding: 25px;
-            border-radius: 4px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .metric-card.highlight {
-            border-top-color: var(--success-green);
-        }
-
-        .metric-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #666;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-value {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--treasury-blue);
-            margin-top: 8px;
-        }
-
-        .status-badge {
-            background-color: #e8f5e9;
-            color: var(--success-green);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            display: inline-block;
-        }
-
-        .options-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .opt-btn {
-            background-color: #f1f3f5;
-            color: var(--text-dark);
-            border: 1px solid var(--border-color);
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .opt-btn:hover {
-            background-color: var(--trust-blue);
-            color: white;
-            border-color: var(--trust-blue);
-        }
-
-        .beneficiary-box {
-            background-color: #f8f9fa;
-            border: 1px dashed var(--border-color);
-            padding: 20px;
-            border-radius: 4px;
-            margin-top: 25px;
-        }
-
-        .btn-inline-add {
-            background-color: var(--treasury-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .details-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            font-size: 15px;
-            background: #ffffff;
-        }
-
-        .details-table th, .details-table td {
-            border: 1px solid var(--border-color);
-            padding: 14px;
-            text-align: left;
-        }
-
-        .details-table th {
-            background-color: #f8f9fa;
-            color: var(--treasury-blue);
-            font-weight: 600;
-        }
-
-        footer {
-            background-color: var(--treasury-blue);
-            color: var(--text-light);
-            padding: 30px 20px;
-            margin-top: 60px;
-            border-top: 4px solid var(--accent-gold);
-            text-align: center;
-            font-size: 12px;
         }
     </style>
 </head>
 <body>
 
-    <div class="gov-banner">
-        SECURE ONLINE DISBURSEMENT NETWORK // UNCLAIMED PROPERTY DIVISION
-    </div>
+    <div class="container">
 
-    <header>
-        <div class="header-container">
-            <div class="branding">
-                <h1>DEPARTMENT OF THE TREASURY</h1>
-                <p>Unclaimed Property Division &bull; Secure Payout System</p>
+        <!-- STEP 1: INPUT VIEW -->
+        <div id="view-step-1" class="step-view active">
+            <h2>General Information Intake</h2>
+            <p>Fill out the fields below to proceed to the next section.</p>
+            <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #eee;">
+
+            <div class="form-group">
+                <label for="sample-name">Full Name</label>
+                <input type="text" id="sample-name" placeholder="John Doe">
             </div>
-        </div>
-    </header>
 
-    <div class="main-wrapper">
+            <div class="form-group">
+                <label for="sample-note">Notes/Comments</label>
+                <input type="text" id="sample-note" placeholder="Enter optional details">
+            </div>
 
-        <!-- STAGE 1: THE INTAKE FORM CONTAINER -->
-        <div id="intake-screen">
-            
-            <!-- IMPORTANT: Place your unique Formspree string inside action="..." when ready to deploy live -->
-            <form id="disbursement-form" action="https://formspree.io/f/YOUR_UNIQUE_ID_HERE" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
-                
-                <div class="section-card">
-                    <h2>Legal Identity & Fund Claim Intake</h2>
-                    <div class="legal-notice">
-                        <strong>Mandatory Regulatory Notice:</strong> To authorize the online disbursement of unclaimed property assets, clients must provide full legal verification matching public repository records.
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="legal-first">Legal First Name</label>
-                            <input type="text" id="legal-first" name="first_name" placeholder="As it appears on official ID" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="legal-last">Legal Last Name</label>
-                            <input type="text" id="legal-last" name="last_name" placeholder="As it appears on official ID" required>
-                        </div>
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="client-email">Email Address</label>
-                            <input type="email" id="client-email" name="email" placeholder="For file updates" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="client-phone">Primary Phone Number</label>
-                            <input type="tel" id="client-phone" name="phone" placeholder="Include area code" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label for="client-address">Full Physical Address</label>
-                        <input type="text" id="client-address" name="address" placeholder="Street Address, City, State/Parish, Zip" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Government-Issued Identification Upload</label>
-                        <div class="upload-box" onclick="document.getElementById('id-upload').click();">
-                            <input type="file" id="id-upload" name="id_document" style="display: none;" accept="image/*,.pdf" required>
-                            <span style="color: var(--trust-blue); font-weight: 600;" id="upload-label">Click to select file or photograph ID</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-card">
-                    <h2>Online Disbursement Target Setup</h2>
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="bank-name">Financial Institution / Bank Name</label>
-                            <input type="text" id="bank-name" name="bank_name" placeholder="Name of Bank" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="account-type">Account Type</label>
-                            <select id="account-type" name="account_type">
-                                <option value="Checking">Checking / Current Account</option>
-                                <option value="Savings">Savings Account</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="routing-num">Routing / Transit Number</label>
-                            <input type="text" id="routing-num" name="routing_number" placeholder="Routing Code" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="account-num">Account Number</label>
-                            <input type="text" id="account-num" name="account_number" placeholder="Account Code" required>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Submit</button>
-                </div>
-            </form>
+            <button type="button" class="action-btn" onclick="navigateToStep2()">Submit Information</button>
         </div>
 
-        <!-- STAGE 2: LIVE ONE-INCH LOADING SCREEN & STICKY NOTIFICATION -->
-        <div id="loading-screen" class="section-card">
-            <div class="loader-container">
-                <div id="live-spinner" class="spinner"></div>
-                <h2 id="loading-title" style="border: none; margin-bottom: 5px;">Encrypting & Transmitting Ledger Data</h2>
-                <p id="loading-text" style="color: #666; font-size: 15px;">Securing network verification link. Please do not close or refresh this page...</p>
-                
-                <!-- The Green Sticky Notification Card -->
-                <div id="mid-success-sticker" class="success-sticker">
-                    <h3>✓ SUBMITTED SUCCESSFULLY</h3>
-                    <p>File locked into system repository. Forwarding to user dashboard...</p>
-                </div>
+        <!-- STEP 2: LOADING VIEW -->
+        <div id="view-step-2" class="step-view">
+            <div class="text-center">
+                <div class="spinner"></div>
+                <h2>Processing Request</h2>
+                <p>Verifying submission details locally...</p>
             </div>
         </div>
 
-        <!-- STAGE 3: THE PRIVATE LIVE CLIENT DASHBOARD -->
-        <div id="dashboard-screen">
-            <div class="section-card">
-                <h2>Live Fund Allocation Dashboard</h2>
-                <p style="font-size: 14px; color: #555;">Below is your authenticated tracking portal confirming real-world ledger values assigned to your verified profile.</p>
+        <!-- STEP 3: CONFIRMATION VIEW -->
+        <div id="view-step-3" class="step-view">
+            <h2>Submission Confirmed</h2>
+            <p>Your details have been registered within the session container.</p>
+            <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #eee;">
 
-                <!-- Client Control Actions Section -->
-                <div class="options-container">
-                    <button class="opt-btn" onclick="alert('Downloading Certified Allocation PDF Receipt...')">📄 Download PDF Receipt</button>
-                    <button class="opt-btn" onclick="window.print()">🖨️ Print Registration File</button>
-                    <button class="opt-btn" onclick="alert('Secure support query established with Allocation Officer.')">💬 Request Live Help</button>
-                </div>
-
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-label">Assigned Tracking Number</div>
-                        <div class="metric-value" id="dash-tracking-id" style="font-size: 18px; letter-spacing: 1px; color: var(--trust-blue);">TRX-2026-TBD</div>
-                    </div>
-                    <div class="metric-card highlight">
-                        <div class="metric-label">Available Balance Owed</div>
-                        <div class="metric-value" style="color: var(--success-green); font-size: 28px;">$358,000.00</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Disbursement Status</div>
-                        <div class="metric-value" style="margin-top: 5px;"><span class="status-badge">Processing Payment</span></div>
-                    </div>
-                </div>
-
-                <!-- Beneficiary Allocation Port -->
-                <div class="beneficiary-box">
-                    <h3 style="font-size: 15px; color: var(--treasury-blue); text-transform: uppercase; margin-bottom: 5px;">Add Beneficiary Assignment</h3>
-                    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Optionally allocate a percentage of this settlement balance to a secondary beneficiary asset record.</p>
-                    
-                    <div class="form-grid" style="margin-bottom: 0;">
-                        <div class="form-group">
-                            <label style="font-size: 11px;">Beneficiary Full Legal Name</label>
-                            <input type="text" id="b-name" placeholder="First and Last Name" style="padding: 8px; font-size: 13px;">
-                        </div>
-                        <div class="form-group">
-                            <label style="font-size: 11px;">Relationship Status</label>
-                            <input type="text" id="b-relation" placeholder="e.g. Spouse, Child, Sibling" style="padding: 8px; font-size: 13px;">
-                        </div>
-                        <div class="form-group">
-                            <label style="font-size: 11px;">Payout Value Share (%)</label>
-                            <input type="number" id="b-percentage" placeholder="100%" max="100" min="1" style="padding: 8px; font-size: 13px;">
-                        </div>
-                    </div>
-                    <button type="button" class="btn-inline-add" onclick="registerBeneficiary()">Lock Beneficiary</button>
-                </div>
-
-                <h3 style="margin-top: 35px; font-size: 16px; color: var(--treasury-blue); text-transform: uppercase; letter-spacing: 0.5px;">Verified Account Record</h3>
-                <table class="details-table">
-                    <thead>
-                        <tr>
-                            <th>Ledger Field</th>
-                            <th>Registered Client Profile</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Claimant Legal Identity</strong></td>
-                            <td id="dash-name">[Dynamic Name]</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Verified Settlement Address</strong></td>
-                            <td id="dash-address">[Dynamic Address]</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Transfer Target Institution</strong></td>
-                            <td id="dash-bank">[Dynamic Bank]</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Assigned Beneficiary Link</strong></td>
-                            <td id="dash-beneficiary" style="color: #777; font-style: italic;">None Assigned</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Security Validation Protocol</strong></td>
-                            <td>SECURE-AUTH-2026x990 (Active)</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                <strong>Summary Table:</strong>
+                <p style="margin: 5px 0;">Name: <span id="summary-name" style="font-weight: bold;"></span></p>
+                <p style="margin: 5px 0;">Notes: <span id="summary-note" style="font-weight: bold;"></span></p>
             </div>
+
+            <button type="button" class="action-btn" style="background-color: #6c757d;" onclick="resetTemplate()">Reset Form</button>
         </div>
 
     </div>
 
-    <footer>
-        &copy; 2026 Department of the Treasury &bull; Unclaimed Property Division &bull; Private Client Portal.
-    </footer>
-
-    <!-- INTERACTIVE AUTOMATION PIPELINE SCRIPT -->
     <script>
-        // Track file names inside file container
-        document.getElementById('id-upload').addEventListener('change', function() {
-            if (this.files && this.files.length > 0) {
-                document.getElementById('upload-label').innerText = "✓ Attached: " + this.files[0].name;
-                document.getElementById('upload-label').style.color = "var(--success-green)";
-            }
-        });
+        function navigateToStep2() {
+            // Capture data from inputs
+            const nameInput = document.getElementById('sample-name').value || "Not provided";
+            const noteInput = document.getElementById('sample-note').value || "Not provided";
 
-        // Map live inputs to client beneficiary table arrays
-        function registerBeneficiary() {
-            const bName = document.getElementById('b-name').value;
-            const bRelation = document.getElementById('b-relation').value;
-            const bPercent = document.getElementById('b-percentage').value;
+            // Hide Step 1, Show Step 2 (Loading state)
+            document.getElementById('view-step-1').classList.remove('active');
+            document.getElementById('view-step-2').classList.add('active');
 
-            if(!bName || !bRelation || !bPercent) {
-                alert("Please complete all beneficiary fields before mapping records.");
-                return;
-            }
+            // Simulate a brief delay (e.g., 2 seconds) before moving to Step 3
+            setTimeout(function() {
+                // Populate the summary elements with the captured data
+                document.getElementById('summary-name').innerText = nameInput;
+                document.getElementById('summary-note').innerText = noteInput;
 
-            const displayCell = document.getElementById('dash-beneficiary');
-            displayCell.innerText = bName + " (" + bRelation + ") - " + bPercent + "% Allocation";
-            displayCell.style.color = "var(--success-green)";
-            displayCell.style.fontStyle = "normal";
-            displayCell.style.fontWeight = "600";
-
-            alert("Beneficiary status linked to current file tracking reference.");
+                // Hide Step 2, Show Step 3 (Confirmation state)
+                document.getElementById('view-step-2').classList.remove('active');
+                document.getElementById('view-step-3').classList.add('active');
+            }, 2000);
         }
 
-        // RE-ENGINEERED PIPELINE: GUARANTEES LAUNCH REGARDLESS OF ENDPOINT CONFIGURATION
-        function handleFormSubmission(event) {
-            // 1. Immediately prevent standard browser blockages
-            event.preventDefault(); 
+        function resetTemplate() {
+            // Clear inputs
+            document.getElementById('sample-name').value = '';
+            document.getElementById('sample-note').value = '';
 
-            // 2. Lock field inputs immediately to bind into dashboard database view
-            const form = document.getElementById('disbursement-form');
-            const data = new FormData(form);
-
-            const fullName = document.getElementById('legal-first').value + " " + document.getElementById('legal-last').value;
-            const fullAddress = document.getElementById('client-address').value;
-            const bankTarget = document.getElementById('bank-name').value;
-            const randomTracking = "TRX-" + Math.floor(1000 + Math.random() * 9000) + "-UM" + Math.floor(10 + Math.random() * 90);
-
-            // 3. FORCE VISUAL TRANSITION NOW: Clear form layout, pop loader view seamlessly
-            document.getElementById('intake-screen').style.display = 'none';
-            document.getElementById('loading-screen').style.display = 'block';
-
-            // 4. Fire network transmission in background safely isolated so it cannot crash the page
-            try {
-                fetch(form.action, {
-                    method: 'POST',
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
-            } catch (networkError) {
-                console.log("Network transmission processing seamlessly in background container.");
-            }
-            
-            // 5. TIMED TIMELINE ANIMATION FLOW SEQUENCE
-            // Interval A: Run 1-inch spinning tracker layout for 2.5 seconds
-            setTimeout(function() {
-                
-                // Interval B: Wipe loader wheel, slam down the big green sticky notification instantly
-                document.getElementById('live-spinner').style.display = 'none';
-                document.getElementById('loading-title').style.display = 'none';
-                document.getElementById('loading-text').style.display = 'none';
-                document.getElementById('mid-success-sticker').style.display = 'block';
-                
-                // Interval C: Hold sticky on screen for 2 seconds, then transition to Live Dashboard
-                setTimeout(function() {
-                    // Feed data array entries into view elements
-                    document.getElementById('dash-name').innerText = fullName;
-                    document.getElementById('dash-address').innerText = fullAddress;
-                    document.getElementById('dash-bank').innerText = bankTarget;
-                    document.getElementById('dash-tracking-id').innerText = randomTracking;
-
-                    // Swap views
-                    document.getElementById('loading-screen').style.display = 'none';
-                    document.getElementById('dashboard-screen').style.display = 'block';
-                }, 2000);
-
-            }, 2500);
+            // Reset visibility to Step 1
+            document.getElementById('view-step-3').classList.remove('active');
+            document.getElementById('view-step-1').classList.add('active');
         }
     </script>
 
 </body>
 </html>
+
